@@ -14,13 +14,13 @@ This application is built to provide an infrastructure in terms of data model an
 
 ### Screenshots
 
-![Home Page](https://github.com/tiagonnascimento/licenseManager/blob/main/docs/images/home.png?raw=true)
-![Home Page - addons](https://github.com/tiagonnascimento/licenseManager/blob/main/docs/images/home-addons.png?raw=true)
-![Home Page - statistics](https://github.com/tiagonnascimento/licenseManager/blob/main/docs/images/home-statistics.png?raw=true)
-![Home Page - users](https://github.com/tiagonnascimento/licenseManager/blob/main/docs/images/home-users.png?raw=true)
-![Home Page - product license list](https://github.com/tiagonnascimento/licenseManager/blob/main/docs/images/productLicenseList.png?raw=true)
-![Home Page - product license detail](https://github.com/tiagonnascimento/licenseManager/blob/main/docs/images/productLicenseDetail.png?raw=true)
-![Home Page - purchase detail](https://github.com/tiagonnascimento/licenseManager/blob/main/docs/images/purchaseDetail.png?raw=true)
+![Home Page](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home.png?raw=true)
+![Home Page - addons](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-addons.png?raw=true)
+![Home Page - statistics](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-statistics.png?raw=true)
+![Home Page - users](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-users.png?raw=true)
+![Home Page - product license list](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseList.png?raw=true)
+![Home Page - product license detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseDetail.png?raw=true)
+![Home Page - purchase detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/purchaseDetail.png?raw=true)
 
 ### Entities and Relationships
 
@@ -37,7 +37,7 @@ Several reports were built in the app based in this data model.
 
 The package contains two permission sets:
 
-1. _License Manager_ - permission set with all required permissions to access the Lightning Application and Data Model. This permission set needs to be assigned to the Analytics Integration User as there is a Analytics Recipe to synchronize the new SObjects with CRM Analytics, so the dashboards can be displayed. 
+1. _License Manager_ - permission set with all required permissions to access the Lightning Application and Data Model. This permission set needs to be assigned to the Analytics Integration User as there is a Analytics Recipe to synchronize the new SObjects with CRM Analytics, so the dashboards can be displayed.
 1. _License Manager - Download CRM Analytics_ - permission set with only the permission to Download CRM Analytics data - useful to get the list of users assigned to permissions without login in the past 180 days
 
 Beside these two permission sets, as the application uses CRM Analytics, users need to have the CRM Analytics permission set license and the permission set in order to access the out-of-the-box dashboard.

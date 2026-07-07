@@ -75,7 +75,7 @@ Características da solução robusta:
 - Cada Product License tem uma **`Query` (SOQL)** como critério para determinar seus usuários (a “camada analítica”). COE apoia o negócio a montá-la; _query builder_ fica como evolução.
 - UI Lightning padrão (sem LWC custom), rollups, relatórios gerenciais, distribuída como **Unlocked Package**.
 - Pode rodar em sandbox/org não-produtiva; cargas inicialmente **manuais**, com evolução para **automação multi-org**.
-- App: `github.com/tiagonnascimento/licenseManager` (v0.1.0-1).
+- App: `github.com/tiagonnascimento/sf-license-manager` (v0.1.0-1).
 - Dashboards: _Named Base Licenses_, _Add-ons & Login Licenses_, _Statistics_, _Users without Login (180 dias)_.
 
 ---

@@ -6,7 +6,7 @@
       "path": "force-app",
       "default": true,
       "package": "LicenseManager",
-      "versionDescription": "View https://github.com/tiagonnascimento/licenseManager/blob/main/README.md"
+      "versionDescription": "View https://github.com/tiagonnascimento/sf-license-manager/blob/main/README.md"
     }
   ],
   "name": "licenseManager",
