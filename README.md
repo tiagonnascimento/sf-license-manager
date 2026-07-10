@@ -8,9 +8,9 @@ This Salesforce Lightning Application is designed to manage product licenses, us
 
 In a Salesforce Org, to accurately determine that a Product License is in use, it is necessary to do more than just observe the assignment of User Licenses, Permission Set Licenses, and Feature Licenses to users.
 
-An analytical layer is essential, utilizing not only these assignments but also other user characteristics such as profile and permissions. This layer does not exist natively in Salesforce Orgs.
+An analytical layer is essential, utilizing not only these assignments but also other user characteristics such as profile and permissions. This layer does not exist natively in Salesforce Orgs. For a detailed write-up of this license-management problem and why native assignment alone is ambiguous, see [`docs/00-problema-gestao-licencas.md`](docs/00-problema-gestao-licencas.md).
 
-This application is built to provide an infrastructure in terms of data model and data extraction to achieve taht end.
+This application is built to provide an infrastructure in terms of data model and data extraction to achieve that end.
 
 ### Screenshots
 
@@ -28,10 +28,11 @@ The application is built around the following custom objects and their relations
 
 1. _ProductLicense\_\_c_ - Contains details about the product license to be managed. Product license is what customer buys from Salesforce. It could be a base license or an add-on.
 1. _ProductLicensePersona\_\_c_ - Persona that uses this product license - represented by a SOQL query.
+1. _PersonaPurchaseAllocation\_\_c_ - Junction linking Persona to PurchaseCondition with a Weight field for per-purchase allocation.
 1. _ProductLicensePurchaseCondition\_\_c_ - As a Product License can have different purchase conditions depending on commercial negotiations, this object will keep a track of these conditions so final prices can be correctly calculated.
-1. _ProductLicenseUserAssignment\_\_c_ - Object to represent product license assignment to users. This object will be populated based on the Product License query. It represents the analytical aspect required to determine product license utilization in a Salesforce Org.
+1. _ProductLicenseUserAssignment\_\_c_ - Object to represent product license assignment to users. This object is populated automatically by `LM_AssignmentGenerationBatch` based on the Product License persona queries. It represents the analytical aspect required to determine product license utilization in a Salesforce Org, and includes per-purchase assignment stamps for financial tracking.
 
-Several reports were built in the app based in this data model.
+Several reports were built in the app based in this data model. A CRM Analytics dashboard provides financial utilization analysis (unit price, waste cost, chargeback allocation, renewal forecasts) per purchase.
 
 ### Permissioning
 
@@ -44,7 +45,9 @@ Beside these two permission sets, as the application uses CRM Analytics, users n
 
 ### Roadmap
 
-Based on the Product License Personas, it's possible to implement automations to automatically create and maintain the Assignments. However this is not built yet and is in the roadmap, depending on adoption.
+~~Based on the Product License Personas, it's possible to implement automations to automatically create and maintain the Assignments.~~ **DELIVERED**: `LM_AssignmentGenerationBatch` now automates UserAssignment generation from persona queries, with Base license deduplication and per-purchase allocation via `PersonaPurchaseAllocation__c`.
+
+~~Link personas to purchase conditions for per-purchase financial tracking.~~ **DELIVERED**: The `PersonaPurchaseAllocation__c` junction and CRM Analytics financial dashboard now provide unit price, waste cost, chargeback allocation, and renewal forecasts per purchase condition.
 
 ### Distribution and Installation
 
