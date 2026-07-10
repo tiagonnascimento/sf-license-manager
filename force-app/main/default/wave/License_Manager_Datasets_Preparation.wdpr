@@ -181,7 +181,7 @@
       "parameters" : {
         "groupings" : [ "PurchaseCondition__c" ],
         "aggregations" : [ {
-          "action" : "count",
+          "action" : "COUNT",
           "name" : "AssignedByPurchase"
         } ]
       }
@@ -205,7 +205,7 @@
       }
     },
     "COMPUTE_FINANCIALS" : {
-      "action" : "computeExpression",
+      "action" : "formula",
       "sources" : [ "JOIN_PURCHASE_UTIL" ],
       "parameters" : {
         "mergeWithSource" : true,
