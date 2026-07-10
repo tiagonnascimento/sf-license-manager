@@ -47,3 +47,7 @@ $RECYCLE.BIN/
 # Agent skills (restored from skills-lock.json via `npx skills experimental_install`)
 .agents/
 .claude/
+
+# SFDMU run artifacts
+scripts/data/sfdmu/reports/
+scripts/data/sfdmu/logs/
