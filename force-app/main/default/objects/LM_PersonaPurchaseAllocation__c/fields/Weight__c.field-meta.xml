@@ -8,7 +8,7 @@
     <label>Weight</label>
     <precision>5</precision>
     <scale>2</scale>
-    <required>false</required>
+    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Percent</type>
 </CustomField>

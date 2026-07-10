@@ -9,7 +9,7 @@
     <referenceTo>LM_ProductLicensePurchaseCondition__c</referenceTo>
     <relationshipLabel>Persona Purchase Allocations</relationshipLabel>
     <relationshipName>PersonaPurchaseAllocations</relationshipName>
-    <required>false</required>
+    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
     <deleteConstraint>Restrict</deleteConstraint>
