@@ -41,6 +41,15 @@ public with sharing class LM_AssignmentGenerationBatch implements Database.Batch
       try {
         matched = (List<User>) Database.query(persona.Query__c);
       } catch (Exception e) {
+        System.debug(
+          LoggingLevel.ERROR,
+          'LM_AssignmentGenerationBatch: persona ' +
+            persona.Id +
+            ' (' +
+            persona.Name +
+            ') query failed: ' +
+            e.getMessage()
+        );
         continue; // a malformed persona query must not abort the whole batch
       }
       if (matched.isEmpty()) {
