@@ -15,7 +15,11 @@
     },
     {
       "operation": "Upsert",
-      "query": "SELECT Id, ProductLicense__c, IsActive__c, LastLoginDate__c, Username__c, UniqueConstraint__c FROM LM_ProductLicenseUserAssignment__c"
+      "query": "SELECT Id, Persona__c, PurchaseCondition__c, Weight__c FROM LM_PersonaPurchaseAllocation__c"
+    },
+    {
+      "operation": "Upsert",
+      "query": "SELECT Id, ProductLicense__c, PurchaseCondition__c, Persona__c, IsActive__c, LastLoginDate__c, Username__c, UniqueConstraint__c FROM LM_ProductLicenseUserAssignment__c"
     }
   ]
 }
