@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help
+  ><!-- Persona whose query population this allocation splits across purchase conditions. --></help>
+    <label>Persona</label>
+    <name>Persona__c</name>
+    <relationshipLabel>Alocações de Compra da Persona</relationshipLabel>
+</CustomFieldTranslation>
