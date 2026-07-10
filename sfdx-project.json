@@ -15,6 +15,7 @@
   "sourceApiVersion": "62.0",
   "packageAliases": {
     "LicenseManager": "0HoKe000000CaRHKA0",
-    "LicenseManager@0.1.0-1": "04tKe000000TnIJIA0"
+    "LicenseManager@0.1.0-1": "04tKe000000TnIJIA0",
+    "LicenseManager@0.2.0-1": "04tKe000000xHBJIA2"
   }
 }
