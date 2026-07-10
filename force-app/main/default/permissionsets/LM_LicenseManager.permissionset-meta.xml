@@ -70,6 +70,16 @@
         <field>LM_ProductLicense__c.Weight__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LM_ProductLicenseUserAssignment__c.PurchaseCondition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LM_ProductLicenseUserAssignment__c.Persona__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>License Manager</label>
     <objectPermissions>
@@ -107,6 +117,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>LM_ProductLicense__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>LM_PersonaPurchaseAllocation__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <tabSettings>
         <tab>LM_ProductLicense__c</tab>

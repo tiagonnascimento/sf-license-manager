@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help
+  ><!-- The single purchase condition this assignment is attributed to. --></help>
+    <label>Condição de Compra</label>
+    <name>PurchaseCondition__c</name>
+    <relationshipLabel>Atribuições de Usuário</relationshipLabel>
+</CustomFieldTranslation>

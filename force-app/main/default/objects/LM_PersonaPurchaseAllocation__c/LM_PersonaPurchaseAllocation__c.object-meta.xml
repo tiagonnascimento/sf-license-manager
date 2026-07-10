@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description
+  >Junction between a Persona and a Purchase Condition. Declares which population (Persona) belongs to which purchase, and in what proportion (Weight). Consumed by the assignment-generation batch to stamp each generated user assignment with a single purchase condition.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <label>Persona Purchase Allocation</label>
+    <nameField>
+        <displayFormat>PPA-{00000}</displayFormat>
+        <label>Persona Purchase Allocation Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Persona Purchase Allocations</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

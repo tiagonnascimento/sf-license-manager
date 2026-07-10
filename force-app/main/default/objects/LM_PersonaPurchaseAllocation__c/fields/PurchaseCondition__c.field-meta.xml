@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PurchaseCondition__c</fullName>
+    <description
+  >Purchase condition that this slice of the persona population is attributed to.</description>
+    <inlineHelpText
+  >The purchase condition this allocation attributes users to.</inlineHelpText>
+    <label>Purchase Condition</label>
+    <referenceTo>LM_ProductLicensePurchaseCondition__c</referenceTo>
+    <relationshipLabel>Persona Purchase Allocations</relationshipLabel>
+    <relationshipName>PersonaPurchaseAllocations</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+    <deleteConstraint>Restrict</deleteConstraint>
+</CustomField>
