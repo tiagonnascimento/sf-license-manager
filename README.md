@@ -21,6 +21,7 @@ This application is built to provide an infrastructure in terms of data model an
 ![Home Page - product license list](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseList.png?raw=true)
 ![Home Page - product license detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseDetail.png?raw=true)
 ![Home Page - purchase detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/purchaseDetail.png?raw=true)
+![CRM Analytics - financial utilization by purchase](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/financial-utilization.png?raw=true)
 
 ### Entities and Relationships
 
