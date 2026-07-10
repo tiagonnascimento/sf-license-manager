@@ -71,7 +71,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "ProductLicense__c", "IsActive__c", "LastLoginDate__c", "UniqueConstraint__c", "Username__c" ],
+        "fields" : [ "Id", "ProductLicense__c", "PurchaseCondition__c", "IsActive__c", "LastLoginDate__c", "UniqueConstraint__c", "Username__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "LM_ProductLicenseUserAssignment__c",
@@ -163,6 +163,110 @@
         },
         "measuresToCurrencies" : [ ]
       }
+    },
+    "FILTER_ACTIVE_UA" : {
+      "action" : "filter",
+      "sources" : [ "LOAD_DATASET5" ],
+      "parameters" : {
+        "filterExpressions" : [ {
+          "field" : "IsActive__c",
+          "operator" : "EQUAL",
+          "operands" : [ "true" ]
+        } ]
+      }
+    },
+    "AGG_BY_PURCHASE" : {
+      "action" : "aggregate",
+      "sources" : [ "FILTER_ACTIVE_UA" ],
+      "parameters" : {
+        "groupings" : [ "PurchaseCondition__c" ],
+        "aggregations" : [ {
+          "action" : "count",
+          "name" : "AssignedByPurchase"
+        } ]
+      }
+    },
+    "JOIN_PURCHASE_UTIL" : {
+      "action" : "join",
+      "sources" : [ "LOAD_DATASET3", "AGG_BY_PURCHASE" ],
+      "schema" : {
+        "fields" : [ ],
+        "slice" : {
+          "mode" : "DROP",
+          "ignoreMissingFields" : true,
+          "fields" : [ "Assignment.PurchaseCondition__c" ]
+        }
+      },
+      "parameters" : {
+        "joinType" : "LOOKUP",
+        "leftKeys" : [ "Id" ],
+        "rightQualifier" : "Assignment",
+        "rightKeys" : [ "PurchaseCondition__c" ]
+      }
+    },
+    "COMPUTE_FINANCIALS" : {
+      "action" : "computeExpression",
+      "sources" : [ "JOIN_PURCHASE_UTIL" ],
+      "parameters" : {
+        "mergeWithSource" : true,
+        "computedFields" : [ {
+          "name" : "AssignedByPurchase",
+          "type" : "Numeric",
+          "precision" : 18,
+          "scale" : 0,
+          "defaultValue" : "0",
+          "saqlExpression" : "coalesce('Assignment.AssignedByPurchase', 0)"
+        }, {
+          "name" : "UnitPrice",
+          "type" : "Numeric",
+          "precision" : 18,
+          "scale" : 2,
+          "defaultValue" : "0",
+          "saqlExpression" : "case when Quantity__c > 0 then Price__c / Quantity__c else 0 end"
+        }, {
+          "name" : "WasteQty",
+          "type" : "Numeric",
+          "precision" : 18,
+          "scale" : 0,
+          "defaultValue" : "0",
+          "saqlExpression" : "Quantity__c - coalesce('Assignment.AssignedByPurchase', 0)"
+        }, {
+          "name" : "WasteCost",
+          "type" : "Numeric",
+          "precision" : 18,
+          "scale" : 2,
+          "defaultValue" : "0",
+          "saqlExpression" : "(Quantity__c - coalesce('Assignment.AssignedByPurchase', 0)) * (case when Quantity__c > 0 then Price__c / Quantity__c else 0 end)"
+        }, {
+          "name" : "UsedCost",
+          "type" : "Numeric",
+          "precision" : 18,
+          "scale" : 2,
+          "defaultValue" : "0",
+          "saqlExpression" : "coalesce('Assignment.AssignedByPurchase', 0) * (case when Quantity__c > 0 then Price__c / Quantity__c else 0 end)"
+        }, {
+          "name" : "ContractedCost",
+          "type" : "Numeric",
+          "precision" : 18,
+          "scale" : 2,
+          "defaultValue" : "0",
+          "saqlExpression" : "Price__c"
+        } ]
+      }
+    },
+    "OUTPUT_PURCHASE_UTIL" : {
+      "action" : "save",
+      "sources" : [ "COMPUTE_FINANCIALS" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Product License Purchase Utilization",
+          "name" : "ProductLicensePurchaseUtilization",
+          "folderName" : "License_Manager_Analytics_App"
+        },
+        "measuresToCurrencies" : [ ]
+      }
     }
   },
   "ui" : {
@@ -246,6 +350,41 @@
         "type" : "OUTPUT",
         "top" : 672,
         "left" : 252
+      },
+      "FILTER_ACTIVE_UA" : {
+        "label" : "Filter Active User Assignments",
+        "description" : "Filter to only active user assignments",
+        "type" : "FILTER",
+        "top" : 812,
+        "left" : 112
+      },
+      "AGG_BY_PURCHASE" : {
+        "label" : "Aggregate by Purchase Condition",
+        "description" : "Count assignments per purchase condition",
+        "type" : "AGGREGATE",
+        "top" : 952,
+        "left" : 112
+      },
+      "JOIN_PURCHASE_UTIL" : {
+        "label" : "Join Purchase Utilization",
+        "description" : "Join purchase condition with assignment counts",
+        "type" : "JOIN",
+        "top" : 1092,
+        "left" : 252
+      },
+      "COMPUTE_FINANCIALS" : {
+        "label" : "Compute Financial Metrics",
+        "description" : "Calculate waste, used, and contracted costs",
+        "type" : "FORMULA",
+        "top" : 1232,
+        "left" : 252
+      },
+      "OUTPUT_PURCHASE_UTIL" : {
+        "label" : "Save Product License Purchase Utilization",
+        "description" : "Save the dataset ProductLicensePurchaseUtilization",
+        "type" : "OUTPUT",
+        "top" : 1372,
+        "left" : 252
       }
     },
     "connectors" : [ {
@@ -269,6 +408,24 @@
     }, {
       "source" : "LOAD_DATASET7",
       "target" : "OUTPUT2"
+    }, {
+      "source" : "LOAD_DATASET5",
+      "target" : "FILTER_ACTIVE_UA"
+    }, {
+      "source" : "FILTER_ACTIVE_UA",
+      "target" : "AGG_BY_PURCHASE"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "JOIN_PURCHASE_UTIL"
+    }, {
+      "source" : "AGG_BY_PURCHASE",
+      "target" : "JOIN_PURCHASE_UTIL"
+    }, {
+      "source" : "JOIN_PURCHASE_UTIL",
+      "target" : "COMPUTE_FINANCIALS"
+    }, {
+      "source" : "COMPUTE_FINANCIALS",
+      "target" : "OUTPUT_PURCHASE_UTIL"
     } ],
     "hiddenColumns" : [ ]
   },
