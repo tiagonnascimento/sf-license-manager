@@ -1,12 +1,12 @@
 {
   "packageDirectories": [
     {
-      "versionName": "ver 0.1",
-      "versionNumber": "0.1.0.NEXT",
+      "versionName": "ver 0.2 — financial utilization layer",
+      "versionNumber": "0.2.0.NEXT",
       "path": "force-app",
       "default": true,
       "package": "LicenseManager",
-      "versionDescription": "View https://github.com/tiagonnascimento/sf-license-manager/blob/main/README.md"
+      "versionDescription": "Financial license-utilization layer: Persona↔PurchaseCondition allocation junction, deterministic per-purchase user assignment, per-purchase utilization dataset and financial dashboard. View https://github.com/tiagonnascimento/sf-license-manager/blob/main/README.md"
     }
   ],
   "name": "licenseManager",

@@ -13,3 +13,5 @@ package.xml
 
 **/profiles/**
 **/AppSwitcher.appMenu**
+# Unrelated retrieved connected app — not part of this package
+**/connectedApps/**
