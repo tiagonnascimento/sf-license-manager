@@ -127,14 +127,14 @@
       "action" : "formula",
       "sources" : [ "JOIN1" ],
       "parameters" : {
-        "mergeWithSource" : true,
-        "computedFields" : [ {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
           "name" : "SourceOrg",
-          "label" : "Source Org",
-          "type" : "Text",
+          "label" : "SourceOrg",
+          "formulaExpression" : "'Primary'",
           "precision" : 255,
-          "defaultValue" : "",
-          "saqlExpression" : "\"Primary\""
+          "defaultValue" : "Primary"
         } ]
       }
     },
@@ -174,14 +174,14 @@
       "action" : "formula",
       "sources" : [ "LOAD_DATASET7" ],
       "parameters" : {
-        "mergeWithSource" : true,
-        "computedFields" : [ {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
           "name" : "SourceOrg",
-          "label" : "Source Org",
-          "type" : "Text",
+          "label" : "SourceOrg",
+          "formulaExpression" : "'Primary'",
           "precision" : 255,
-          "defaultValue" : "",
-          "saqlExpression" : "\"Primary\""
+          "defaultValue" : "Primary"
         } ]
       }
     },
@@ -252,14 +252,14 @@
       "action" : "formula",
       "sources" : [ "JOIN_PURCHASE_UTIL" ],
       "parameters" : {
-        "mergeWithSource" : true,
-        "computedFields" : [ {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
           "name" : "SourceOrg",
-          "label" : "Source Org",
-          "type" : "Text",
+          "label" : "SourceOrg",
+          "formulaExpression" : "'Primary'",
           "precision" : 255,
-          "defaultValue" : "",
-          "saqlExpression" : "\"Primary\""
+          "defaultValue" : "Primary"
         } ]
       }
     },
