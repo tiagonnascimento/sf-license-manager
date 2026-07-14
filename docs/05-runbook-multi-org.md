@@ -31,7 +31,19 @@ Use este runbook quando:
   `LM_ProductLicenseUserAssignment__c`, `LM_ProductLicensePurchaseCondition__c` etc.
   mantidos/atualizados em cada uma delas.
 - O permission set `LM_LicenseManager` atribuído ao **Analytics Integration User** em
-  cada org (necessário para o CRM Analytics conseguir ler os objetos `LM_` via Data Sync).
+  cada org (necessário para o CRM Analytics conseguir ler os objetos `LM_` via Data Sync
+  **e** para a recipe rodar — ela executa como esse usuário, não como você). Via CLI:
+
+  ```bash
+  # descubra o usuário de integração
+  sf data query --query "SELECT Id, Name, Username FROM User WHERE Name LIKE '%Integration%' AND IsActive = true" --target-org <ORG>
+  # atribua o permset a ele (não só ao seu próprio usuário)
+  sf org assign permset --name LM_LicenseManager --target-org <ORG> --on-behalf-of <integration-username>
+  ```
+
+  > Se o permset não estiver no Integration User, a recipe roda mas os datasets vêm
+  > vazios (o usuário não enxerga os objetos `LM_`).
+
 - Definido qual org será a **org hub**: é nela que a recipe consolidada vai rodar e onde
   o dashboard final será visualizado. As demais orgs (org B, org C, ...) são apenas
   fonte de dados via conexão.
@@ -76,12 +88,32 @@ Cada ramo de input deve carregar um nó de fórmula (`formula` — **nunca**
 - Ramo da org B (novo, criado neste runbook): `SourceOrg = "OrgB"` (ou o nome real da
   org B, ex.: `"B2C"`, `"LATAM"`, etc.).
 
-Use a mesma expressão SAQL do carimbo existente na recipe empacotada, só troque o
-literal:
+Use o **mesmo schema de nó `formula` da recipe empacotada** (validado em API 67.0), só
+troque o literal. O nó tem `expressionType: "SQL"` e um campo `TEXT` cuja
+`formulaExpression` é o literal **entre aspas simples**:
 
 ```json
-"saqlExpression": "\"OrgB\""
+"parameters": {
+  "expressionType": "SQL",
+  "fields": [
+    {
+      "type": "TEXT",
+      "name": "SourceOrg",
+      "label": "SourceOrg",
+      "formulaExpression": "'OrgB'",
+      "precision": 255,
+      "defaultValue": "OrgB"
+    }
+  ]
+}
 ```
+
+> ⚠️ **Não use** `saqlExpression`, `computedFields`, nem literal entre aspas duplas
+> (`"OrgB"`). Esse schema antigo **salva/deploya sem erro** mas falha no **run-time** da
+> recipe com `Specify fields for the <NODE> node` — o nó precisa de `formulaExpression`
+> (não `saqlExpression`), container `fields` (não `computedFields`), `type: "TEXT"`
+> (maiúsculo) e o literal em aspas simples. Confirmado em validação hands-on: com o
+> schema correto a coluna `SourceOrg` popula (`"Primary"` na org de origem).
 
 ### Passo 4 — Fazer append (union) dos ramos antes de salvar cada dataset de saída
 
@@ -98,9 +130,24 @@ você quiser esses datasets também consolidados.
 ### Passo 5 — Re-rodar a recipe e (opcional) agendar
 
 - Salve a recipe e clique em **Run Recipe** para popular os datasets com as linhas de
-  ambas as orgs.
+  ambas as orgs. (Alternativa headless, sem a Studio: `POST /wave/dataflowjobs` com
+  `{"dataflowId":"<targetDataflowId>","command":"start"}` — atenção: use o
+  `targetDataflowId` (`02K…`) obtido em `GET /wave/recipes/<id>?format=R3`, **não** o id
+  da recipe (`05v…`); depois faça poll em `GET /wave/dataflowjobs/<jobId>` até `status`
+  = `Success`.)
 - Valide que cada dataset final tem pelo menos dois valores distintos de `SourceOrg`
-  (ex.: `"Primary"` e `"OrgB"`).
+  (ex.: `"Primary"` e `"OrgB"`). Via SAQL (`POST /wave/query`), agrupando por
+  `SourceOrg`:
+
+  ```
+  q = load "<datasetId>/<versionId>";
+  q = group q by 'SourceOrg';
+  q = foreach q generate 'SourceOrg' as 'SourceOrg', count() as 'cnt';
+  ```
+
+  Deve retornar uma linha por org. Se voltar só `"Primary"`, o ramo da org B não foi
+  carimbado/append corretamente (revise os Passos 3–4).
+
 - Abra `License_Management_Dashboard` — como o dashboard já agrupa dinamicamente por
   `SourceOrg` (parte empacotada da issue #4), as duas orgs devem aparecer
   automaticamente, sem qualquer edição do dashboard.
