@@ -1,0 +1,36 @@
+<template>
+  <lightning-card title="Org-Wide Entitlements" icon-name="utility:metrics">
+    <div class="slds-p-horizontal_small">
+      <p class="slds-text-body_small slds-m-bottom_small">
+        Org-level usage vs limit — not attributable per purchase.
+      </p>
+      <template for:each={limits} for:item="l">
+        <div key={l.name} data-id="limit-row" class="slds-m-bottom_x-small">
+          <span>{l.name}</span>
+          <lightning-progress-bar
+            value={l.pct}
+            size="medium"
+          ></lightning-progress-bar>
+          <span class="slds-text-body_small">{l.used} / {l.max}</span>
+        </div>
+      </template>
+      <template if:true={entitlements.length}>
+        <h3 class="slds-text-heading_small slds-m-top_medium">
+          Usage-Based Entitlements
+        </h3>
+        <template for:each={entitlements} for:item="e">
+          <div
+            key={e.setting}
+            data-id="entitlement-row"
+            class="slds-m-bottom_x-small"
+          >
+            <span>{e.setting}</span>
+            <span class="slds-text-body_small"
+              >{e.amountUsed} / {e.amountAllowed} ({e.frequency})</span
+            >
+          </div>
+        </template>
+      </template>
+    </div>
+  </lightning-card>
+</template>
