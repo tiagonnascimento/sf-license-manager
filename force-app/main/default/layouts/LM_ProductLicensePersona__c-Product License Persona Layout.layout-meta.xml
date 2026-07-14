@@ -53,6 +53,12 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>PurchaseCondition__c</fields>
+        <fields>Weight__c</fields>
+        <relatedList>LM_PersonaPurchaseAllocation__c.Persona__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
