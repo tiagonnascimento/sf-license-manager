@@ -123,9 +123,24 @@
         "preserveCurrencyFields" : [ ]
       }
     },
+    "COMPUTE_SOURCEORG_UA" : {
+      "action" : "formula",
+      "sources" : [ "JOIN1" ],
+      "parameters" : {
+        "mergeWithSource" : true,
+        "computedFields" : [ {
+          "name" : "SourceOrg",
+          "label" : "Source Org",
+          "type" : "Text",
+          "precision" : 255,
+          "defaultValue" : "",
+          "saqlExpression" : "\"Primary\""
+        } ]
+      }
+    },
     "OUTPUT1" : {
       "action" : "save",
-      "sources" : [ "JOIN1" ],
+      "sources" : [ "COMPUTE_SOURCEORG_UA" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -155,9 +170,24 @@
         "preserveCurrencyFields" : [ ]
       }
     },
+    "COMPUTE_SOURCEORG_PL" : {
+      "action" : "formula",
+      "sources" : [ "LOAD_DATASET7" ],
+      "parameters" : {
+        "mergeWithSource" : true,
+        "computedFields" : [ {
+          "name" : "SourceOrg",
+          "label" : "Source Org",
+          "type" : "Text",
+          "precision" : 255,
+          "defaultValue" : "",
+          "saqlExpression" : "\"Primary\""
+        } ]
+      }
+    },
     "OUTPUT2" : {
       "action" : "save",
-      "sources" : [ "LOAD_DATASET7" ],
+      "sources" : [ "COMPUTE_SOURCEORG_PL" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -304,6 +334,12 @@
           "sampleSize" : 2000
         }
       },
+      "COMPUTE_SOURCEORG_UA" : {
+        "label" : "COMPUTE_SOURCEORG_UA",
+        "type" : "COMPUTE_EXPRESSION",
+        "top" : 252,
+        "left" : 322
+      },
       "OUTPUT1" : {
         "label" : "OUTPUT1",
         "type" : "OUTPUT",
@@ -318,6 +354,12 @@
         "parameters" : {
           "sampleSize" : 2000
         }
+      },
+      "COMPUTE_SOURCEORG_PL" : {
+        "label" : "COMPUTE_SOURCEORG_PL",
+        "type" : "COMPUTE_EXPRESSION",
+        "top" : 812,
+        "left" : 182
       },
       "OUTPUT2" : {
         "label" : "OUTPUT2",
@@ -381,9 +423,15 @@
       "target" : "JOIN1"
     }, {
       "source" : "JOIN1",
+      "target" : "COMPUTE_SOURCEORG_UA"
+    }, {
+      "source" : "COMPUTE_SOURCEORG_UA",
       "target" : "OUTPUT1"
     }, {
       "source" : "LOAD_DATASET7",
+      "target" : "COMPUTE_SOURCEORG_PL"
+    }, {
+      "source" : "COMPUTE_SOURCEORG_PL",
       "target" : "OUTPUT2"
     }, {
       "source" : "LOAD_DATASET5",
