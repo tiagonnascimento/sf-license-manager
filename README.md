@@ -16,12 +16,11 @@ This application is built to provide an infrastructure in terms of data model an
 
 ![Home Page](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home.png?raw=true)
 ![Home Page - addons](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-addons.png?raw=true)
-![Home Page - statistics](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-statistics.png?raw=true)
 ![Home Page - users](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-users.png?raw=true)
+![Home Page - financial utilization by license](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-financial-utilization.png?raw=true)
 ![Home Page - product license list](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseList.png?raw=true)
 ![Home Page - product license detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseDetail.png?raw=true)
 ![Home Page - purchase detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/purchaseDetail.png?raw=true)
-![CRM Analytics - financial utilization by purchase](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/financial-utilization.png?raw=true)
 
 ### Entities and Relationships
 
@@ -33,7 +32,7 @@ The application is built around the following custom objects and their relations
 1. _ProductLicensePurchaseCondition\_\_c_ - As a Product License can have different purchase conditions depending on commercial negotiations, this object will keep a track of these conditions so final prices can be correctly calculated.
 1. _ProductLicenseUserAssignment\_\_c_ - Object to represent product license assignment to users. This object is populated automatically by `LM_AssignmentGenerationBatch` based on the Product License persona queries. It represents the analytical aspect required to determine product license utilization in a Salesforce Org, and includes per-purchase assignment stamps for financial tracking.
 
-Several reports were built in the app based in this data model. A CRM Analytics dashboard provides financial utilization analysis (unit price, waste cost, chargeback allocation, renewal forecasts) per purchase.
+Several reports were built in the app based in this data model. A CRM Analytics dashboard provides financial utilization analysis (unit price, used cost, idle cost) drilled down to the license level, broken down by Vice-Presidency and Board of Directors, with values in BRL (R$).
 
 ### Permissioning
 

@@ -1,5 +1,5 @@
 /**
- * Truncate-and-reload materialization of LM_ProductLicenseUserAssignment__c.
+ * Reload half of the truncate-and-reload materialization of LM_ProductLicenseUserAssignment__c.
  * Reads each Persona, runs its Query__c against the org, partitions the returned users across
  * the persona's purchase allocations (LM_AssignmentAllocator), and inserts one assignment per user
  * stamped with a single PurchaseCondition.
@@ -10,6 +10,12 @@
  *
  * Query__c contract: SELECT Id, Username, CreatedDate FROM User WHERE <persona disambiguation>.
  *
+ * TRUNCATION: This batch assumes LM_ProductLicenseUserAssignment__c is ALREADY EMPTY. It no longer
+ * deletes existing rows — a single delete over a large table breaches the 50k query-row limit. The
+ * purge is owned by LM_AssignmentPurgeQueueable, which truncates in chunks and then chains this
+ * batch. Kick off a full reload via LM_AssignmentPurgeQueueable, never by calling this batch on a
+ * non-empty table.
+ *
  * INVARIANT: This batch MUST be run at scope=1 (one persona per execute()). The Schedulable entry
  * point enforces this. Each persona's Query__c result set must fit within a single transaction's
  * heap and query-row limits (up to ~50k users). Personas exceeding this boundary are out of scope
@@ -17,7 +23,6 @@
  */
 public with sharing class LM_AssignmentGenerationBatch implements Database.Batchable<SObject>, Database.Stateful, Schedulable {
   public Database.QueryLocator start(Database.BatchableContext ctx) {
-    delete [SELECT Id FROM LM_ProductLicenseUserAssignment__c];
     return Database.getQueryLocator(
       [
         SELECT
@@ -116,9 +121,10 @@ public with sharing class LM_AssignmentGenerationBatch implements Database.Batch
   public void finish(Database.BatchableContext ctx) {
   }
 
-  // Schedulable entry point — chain the batch from a scheduled job.
+  // Schedulable entry point — start a full purge+reload. The purge queueable truncates the table in
+  // chunks and chains this batch when empty, so the scheduled job scales past the 50k query-row cap.
   public void execute(SchedulableContext sc) {
-    Database.executeBatch(new LM_AssignmentGenerationBatch(), 1);
+    System.enqueueJob(new LM_AssignmentPurgeQueueable());
   }
 
   private Map<Id, List<LM_AssignmentAllocator.Allocation>> loadAllocationsBulk(

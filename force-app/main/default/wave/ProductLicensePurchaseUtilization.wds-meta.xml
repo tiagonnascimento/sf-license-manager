@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveDataset xmlns="http://soap.sforce.com/2006/04/metadata">
+    <application>License_Manager_Analytics_App</application>
+    <description>Created from the License Manager Datasets Preparation recipe.</description>
+    <masterLabel>Product License Purchase Utilization</masterLabel>
+    <type>default</type>
+</WaveDataset>

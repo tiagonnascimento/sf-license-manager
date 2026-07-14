@@ -39,7 +39,7 @@ npm run prettier:verify   # check formatting without writing
 
 A husky `pre-commit` hook runs `lint-staged` (prettier on most files, eslint on aura/lwc JS). Prettier uses `prettier-plugin-apex` and `@prettier/plugin-xml`.
 
-Deploy metadata with the Salesforce CLI, e.g. `sf project deploy start`. Source API version is `62.0`. Note `.forceignore` excludes `profiles/**`, `package.xml`, and LWC config/test files from source tracking.
+Deploy metadata with the Salesforce CLI, e.g. `sf project deploy start`. Source API version is `67.0`. Note `.forceignore` excludes `profiles/**`, `package.xml`, and LWC config/test files from source tracking.
 
 ## Sample data
 
