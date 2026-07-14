@@ -218,9 +218,24 @@
         "rightKeys" : [ "PurchaseCondition__c" ]
       }
     },
+    "COMPUTE_SOURCEORG" : {
+      "action" : "formula",
+      "sources" : [ "JOIN_PURCHASE_UTIL" ],
+      "parameters" : {
+        "mergeWithSource" : true,
+        "computedFields" : [ {
+          "name" : "SourceOrg",
+          "label" : "Source Org",
+          "type" : "Text",
+          "precision" : 255,
+          "defaultValue" : "",
+          "saqlExpression" : "\"Primary\""
+        } ]
+      }
+    },
     "OUTPUT_PURCHASE_UTIL" : {
       "action" : "save",
-      "sources" : [ "JOIN_PURCHASE_UTIL" ],
+      "sources" : [ "COMPUTE_SOURCEORG" ],
       "parameters" : {
         "fields" : [ ],
         "dataset" : {
@@ -336,6 +351,12 @@
         "top" : 112,
         "left" : 532
       },
+      "COMPUTE_SOURCEORG" : {
+        "label" : "COMPUTE_SOURCEORG",
+        "type" : "COMPUTE_EXPRESSION",
+        "top" : 112,
+        "left" : 602
+      },
       "OUTPUT_PURCHASE_UTIL" : {
         "label" : "OUTPUT_PURCHASE_UTIL",
         "type" : "OUTPUT",
@@ -378,6 +399,9 @@
       "target" : "JOIN_PURCHASE_UTIL"
     }, {
       "source" : "JOIN_PURCHASE_UTIL",
+      "target" : "COMPUTE_SOURCEORG"
+    }, {
+      "source" : "COMPUTE_SOURCEORG",
       "target" : "OUTPUT_PURCHASE_UTIL"
     } ],
     "hiddenColumns" : [ ]
