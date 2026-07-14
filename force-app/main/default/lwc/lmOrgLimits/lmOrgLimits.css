@@ -1,0 +1,12 @@
+.lm-tile {
+  height: 100%;
+}
+
+.lm-tile__head {
+  margin-bottom: 0.25rem;
+}
+
+/* Keep the limit name from crowding the percentage on narrow tiles. */
+.lm-tile .slds-truncate {
+  max-width: 100%;
+}
