@@ -41,7 +41,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c", "Org__c" ],
+        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "LM_ProductLicense__c",
@@ -109,7 +109,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c", "Org__c" ],
+        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "LM_ProductLicense__c",
@@ -141,7 +141,7 @@
       "action" : "load",
       "sources" : [ ],
       "parameters" : {
-        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c", "Org__c" ],
+        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c" ],
         "dataset" : {
           "type" : "connectedDataset",
           "label" : "LM_ProductLicense__c",

@@ -75,8 +75,7 @@ private class LM_AssignmentGenerationBatchTest {
       LM_ProductLicense__c pl = new LM_ProductLicense__c(
         Name = 'Comms Advanced',
         Type__c = 'Base',
-        Weight__c = 10,
-        Org__c = 'Test Org'
+        Weight__c = 10
       );
       insert pl;
       LM_ProductLicensePersona__c persona = new LM_ProductLicensePersona__c(
@@ -153,8 +152,7 @@ private class LM_AssignmentGenerationBatchTest {
       LM_ProductLicense__c pl = new LM_ProductLicense__c(
         Name = 'X',
         Type__c = 'Base',
-        Weight__c = 1,
-        Org__c = 'Test Org'
+        Weight__c = 1
       );
       insert pl;
       insert new LM_ProductLicenseUserAssignment__c(

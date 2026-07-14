@@ -3,7 +3,7 @@
     {
       "operation": "Upsert",
       "externalId": "Name",
-      "query": "SELECT Id, Org__c, Name, Type__c, Weight__c, Quantity__c, UserType__c, AssignmentType__c FROM LM_ProductLicense__c"
+      "query": "SELECT Id, Name, Type__c, Weight__c, Quantity__c, UserType__c, AssignmentType__c FROM LM_ProductLicense__c"
     },
     {
       "operation": "Upsert",

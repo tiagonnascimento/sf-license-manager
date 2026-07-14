@@ -36,8 +36,7 @@ private class LM_AssignmentPurgeQueueableTest {
     LM_ProductLicense__c pl = new LM_ProductLicense__c(
       Name = 'X',
       Type__c = 'Base',
-      Weight__c = 1,
-      Org__c = 'Test Org'
+      Weight__c = 1
     );
     insert pl;
     return pl;
