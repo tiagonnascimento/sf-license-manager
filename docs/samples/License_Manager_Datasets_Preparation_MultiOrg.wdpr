@@ -24,14 +24,14 @@
       "action" : "formula",
       "sources" : [ "LOAD_PL_ORGA" ],
       "parameters" : {
-        "mergeWithSource" : true,
-        "computedFields" : [ {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
           "name" : "SourceOrg",
-          "label" : "Source Org",
-          "type" : "Text",
+          "label" : "SourceOrg",
+          "formulaExpression" : "'Primary'",
           "precision" : 255,
-          "defaultValue" : "",
-          "saqlExpression" : "\"Primary\""
+          "defaultValue" : "Primary"
         } ]
       }
     },
@@ -57,14 +57,14 @@
       "action" : "formula",
       "sources" : [ "LOAD_PL_ORGB" ],
       "parameters" : {
-        "mergeWithSource" : true,
-        "computedFields" : [ {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
           "name" : "SourceOrg",
-          "label" : "Source Org",
-          "type" : "Text",
+          "label" : "SourceOrg",
+          "formulaExpression" : "'OrgB'",
           "precision" : 255,
-          "defaultValue" : "",
-          "saqlExpression" : "\"OrgB\""
+          "defaultValue" : "OrgB"
         } ]
       }
     },
@@ -102,11 +102,20 @@
           "sampleSize" : 2000
         }
       },
-      "COMPUTE_SOURCEORG_ORGA" : {
+      "TRANSFORM_ORGA" : {
         "label" : "Stamp SourceOrg=Primary",
-        "type" : "COMPUTE_EXPRESSION",
+        "type" : "TRANSFORM",
         "top" : 112,
-        "left" : 252
+        "left" : 252,
+        "graph" : {
+          "COMPUTE_SOURCEORG_ORGA" : {
+            "label" : "Formula",
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            }
+          }
+        },
+        "connectors" : [ ]
       },
       "LOAD_PL_ORGB" : {
         "label" : "LM_ProductLicense__c (Org B, PLACEHOLDER connection)",
@@ -117,11 +126,20 @@
           "sampleSize" : 2000
         }
       },
-      "COMPUTE_SOURCEORG_ORGB" : {
+      "TRANSFORM_ORGB" : {
         "label" : "Stamp SourceOrg=OrgB",
-        "type" : "COMPUTE_EXPRESSION",
+        "type" : "TRANSFORM",
         "top" : 252,
-        "left" : 252
+        "left" : 252,
+        "graph" : {
+          "COMPUTE_SOURCEORG_ORGB" : {
+            "label" : "Formula",
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            }
+          }
+        },
+        "connectors" : [ ]
       },
       "APPEND_MULTIORG" : {
         "label" : "Append Org A + Org B",
@@ -138,15 +156,15 @@
     },
     "connectors" : [ {
       "source" : "LOAD_PL_ORGA",
-      "target" : "COMPUTE_SOURCEORG_ORGA"
+      "target" : "TRANSFORM_ORGA"
     }, {
       "source" : "LOAD_PL_ORGB",
-      "target" : "COMPUTE_SOURCEORG_ORGB"
+      "target" : "TRANSFORM_ORGB"
     }, {
-      "source" : "COMPUTE_SOURCEORG_ORGA",
+      "source" : "TRANSFORM_ORGA",
       "target" : "APPEND_MULTIORG"
     }, {
-      "source" : "COMPUTE_SOURCEORG_ORGB",
+      "source" : "TRANSFORM_ORGB",
       "target" : "APPEND_MULTIORG"
     }, {
       "source" : "APPEND_MULTIORG",

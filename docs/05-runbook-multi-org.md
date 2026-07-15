@@ -54,12 +54,39 @@ Use este runbook quando:
 
 ### Passo 1 — Criar a conexão (Data Sync connection) para a org B
 
-Na **org hub**, crie uma nova conexão do tipo Salesforce (Data Sync) apontando para a
-org B:
+A conexão Salesforce-to-Salesforce do Data Sync autentica via **OAuth**, então antes de
+criá-la na hub você precisa de um **OAuth client na org B** (a org de origem) para
+obter um **Consumer Key** e **Consumer Secret**.
 
-- Data Manager → **Connect to Data** → **Connect a Salesforce Org**.
-- Autentique com um usuário de integração da org B (o mesmo usuário com o permission
-  set `LM_LicenseManager`, para garantir acesso aos objetos `LM_`).
+**1a. Criar o OAuth client na org B.** Em orgs novas (inclusive scratch orgs) a criação
+de _Connected Apps_ costuma vir **bloqueada** ("entre em contato com o Suporte"). Nesse
+caso use um **External Client App (ECA)**: Setup → **App Manager** → **New External
+Client App**, habilite OAuth, escopos `Api`, `RefreshToken`, `Web`, callback
+`https://login.salesforce.com/services/oauth2/callback`. (ECAs também são deployáveis
+por metadata: tipos `ExternalClientApplication` + `ExtlClntAppOauthSettings` +
+`ExtlClntAppGlobalOauthSettings`.)
+
+**1b. Obter o Consumer Key/Secret.** Na UI, "reveal" da chave/segredo dispara um desafio
+de verificação por e-mail que **não chega em scratch orgs** (entrega de e-mail
+restrita). Contorne pela **Connect REST API** (min. API v60.0):
+
+1. Habilite o acesso via REST: em External Client App Settings, ligue **"Allow access to
+   External Client App consumer secrets via REST API"** (campo de metadata
+   `ExternalClientAppSettings.enableClientSecretInRestApiAccess = true`), e conceda a
+   user perm **View Client Secret** ao usuário que fará as chamadas.
+2. `GET /services/data/v61.0/apps/oauth/usage` → ache o app pelo `developerName`, pegue
+   seu `identifier` (`0xI…`).
+3. `GET /services/data/v61.0/apps/oauth/credentials/<identifier>` → pegue o `id` do
+   consumer (`888…`).
+4. `GET /services/data/v61.0/apps/oauth/credentials/<identifier>/<consumerId>?part=keyandsecret`
+   → a resposta traz `key` (Consumer Key) e `secret` (Consumer Secret).
+
+**1c. Criar a conexão na hub.** Em **Analytics Studio → Data Manager → Connect to Data →
+Connect a Salesforce Org** (tipo Salesforce External / Data Sync):
+
+- Informe a **instance URL** da org B, o **Consumer Key** e **Consumer Secret** do passo
+  1b, e autentique com um usuário de integração da org B que tenha o permission set
+  `LM_LicenseManager` (para enxergar os objetos `LM_`).
 - Dê um nome claro à conexão (ex.: `ORG_B_CONNECTION`) — esse nome é o
   `connectionName` que os nós `load` da recipe vão referenciar.
 
@@ -127,6 +154,15 @@ Faça isso para cada dataset de saída que deve consolidar múltiplas orgs — n
 mesmo padrão se aplica a `ProductLicenses` e `ProductLicensesWithUserAssignments` se
 você quiser esses datasets também consolidados.
 
+> ⚠️ **Insira o append pelo builder, não à mão no JSON.** O nó `append` executável
+> (bloco `nodes`) tem schema simples, mas seu **nó `ui`** correspondente (o retângulo no
+> canvas) tem um shape que **não é validado publicamente** — o único exemplo existente é
+> o sample ilustrativo abaixo, que nunca foi deployado. Escrever esse nó `ui` de append à
+> mão faz o Recipe Builder falhar ao abrir com **"Error loading recipe JSON"** (a recipe
+> ainda deploya sem erro por metadata, mas fica ineditável na Studio). Adicione o append
+> arrastando o nó no builder; deixe o JSON manual apenas para os nós cujo shape você já
+> validou (como o `formula`/`TRANSFORM` do Passo 3).
+
 ### Passo 5 — Re-rodar a recipe e (opcional) agendar
 
 - Salve a recipe e clique em **Run Recipe** para popular os datasets com as linhas de
@@ -135,6 +171,16 @@ você quiser esses datasets também consolidados.
   `targetDataflowId` (`02K…`) obtido em `GET /wave/recipes/<id>?format=R3`, **não** o id
   da recipe (`05v…`); depois faça poll em `GET /wave/dataflowjobs/<jobId>` até `status`
   = `Success`.)
+
+  > ⚠️ **Deploy de metadata ≠ recompilação.** Fazer `sf project deploy start` de um
+  > `.wdpr` atualiza a **definição** R3 da recipe, mas **não** recompila o dataflow
+  > executável (`02K…`) que o `Run Recipe` / `POST /wave/dataflowjobs` de fato roda —
+  > rodar logo após um deploy executa a versão compilada **antiga** (stale). Só um
+  > **Save** dentro do Recipe Builder recompila o executável. Ou seja: depois de editar
+  > o JSON e deployar, **abra a recipe no builder e salve** antes de rodar, senão os
+  > ramos novos (org B) não entram no resultado. (Por isso este runbook recomenda editar
+  > a recipe **pelo builder**, Passos 2–4, e não por JSON/metadata.)
+
 - Valide que cada dataset final tem pelo menos dois valores distintos de `SourceOrg`
   (ex.: `"Primary"` e `"OrgB"`). Via SAQL (`POST /wave/query`), agrupando por
   `SourceOrg`:
