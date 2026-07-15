@@ -1,0 +1,38 @@
+.lm-tile {
+  height: 100%;
+}
+
+.lm-tile__head {
+  margin-bottom: 0.25rem;
+}
+
+/* Keep the name from crowding the tile: block display so text-overflow
+ * ellipsis actually clamps (an inline span won't truncate on its own). */
+.lm-tile .slds-truncate {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+ * Bound each section's tile grid and scroll inside the widget rather than
+ * stretching the whole dashboard component region. The section headers sit
+ * outside this container, so they stay visible while the tiles scroll.
+ */
+.lm-scroll {
+  max-height: 16rem;
+  overflow-y: auto;
+  /* Room so the scrollbar doesn't sit on top of the tile edges. */
+  padding-right: 0.25rem;
+}
+
+/* Capacity Limits gets 80% more height than the default scroll region. */
+.lm-scroll_tall {
+  max-height: 28.8rem;
+}
+
+/* Give the second section clear breathing room from the first. */
+.lm-section-head {
+  border-top: 1px solid #dddbda;
+  margin-top: 40px;
+  padding-top: 32px;
+}

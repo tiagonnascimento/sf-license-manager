@@ -1,0 +1,176 @@
+{
+  "_ILLUSTRATIVE_ONLY" : "This file is a reference sample for docs/05-runbook-multi-org.md. It is NOT part of the LicenseManager package (it lives under docs/, outside force-app/), it is NOT deployable, and 'ORG_B_CONNECTION_PLACEHOLDER' is not a real CRM Analytics connection. It shows only the 2-org shape (load -> stamp SourceOrg -> append -> save) applied to the LM_ProductLicense__c branch of the purchase-utilization dataset. See docs/samples/README.md.",
+  "version" : "67.0",
+  "nodes" : {
+    "LOAD_PL_ORGA" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "LM_ProductLicense__c (Org A / hub, real connection)",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "LM_ProductLicense__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "COMPUTE_SOURCEORG_ORGA" : {
+      "action" : "formula",
+      "sources" : [ "LOAD_PL_ORGA" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "SourceOrg",
+          "label" : "SourceOrg",
+          "formulaExpression" : "'Primary'",
+          "precision" : 255,
+          "defaultValue" : "Primary"
+        } ]
+      }
+    },
+    "LOAD_PL_ORGB" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "Name", "AssignmentType__c", "Type__c", "UserType__c", "AvailableQuantity__c", "AssignedQuantity__c", "Quantity__c" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "LM_ProductLicense__c (Org B, PLACEHOLDER connection - does not exist)",
+          "connectionName" : "ORG_B_CONNECTION_PLACEHOLDER",
+          "sourceObjectName" : "LM_ProductLicense__c"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "COMPUTE_SOURCEORG_ORGB" : {
+      "action" : "formula",
+      "sources" : [ "LOAD_PL_ORGB" ],
+      "parameters" : {
+        "expressionType" : "SQL",
+        "fields" : [ {
+          "type" : "TEXT",
+          "name" : "SourceOrg",
+          "label" : "SourceOrg",
+          "formulaExpression" : "'OrgB'",
+          "precision" : 255,
+          "defaultValue" : "OrgB"
+        } ]
+      }
+    },
+    "APPEND_MULTIORG" : {
+      "action" : "append",
+      "sources" : [ "COMPUTE_SOURCEORG_ORGA", "COMPUTE_SOURCEORG_ORGB" ],
+      "parameters" : {
+        "note" : "ILLUSTRATIVE: unions the Org A branch (real connection) with the Org B branch (placeholder connection) so the output dataset below carries rows tagged SourceOrg='Primary' and SourceOrg='OrgB'.",
+        "fields" : [ ]
+      }
+    },
+    "OUTPUT_MULTIORG_SAMPLE" : {
+      "action" : "save",
+      "sources" : [ "APPEND_MULTIORG" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "SAMPLE ONLY - Product Licenses Multi-Org",
+          "name" : "ProductLicensePurchaseUtilization_MultiOrg_SAMPLE",
+          "folderName" : "License_Manager_Analytics_App"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    }
+  },
+  "ui" : {
+    "nodes" : {
+      "LOAD_PL_ORGA" : {
+        "label" : "LM_ProductLicense__c (Org A)",
+        "type" : "LOAD_DATASET",
+        "top" : 112,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "TRANSFORM_ORGA" : {
+        "label" : "Stamp SourceOrg=Primary",
+        "type" : "TRANSFORM",
+        "top" : 112,
+        "left" : 252,
+        "graph" : {
+          "COMPUTE_SOURCEORG_ORGA" : {
+            "label" : "Formula",
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            }
+          }
+        },
+        "connectors" : [ ]
+      },
+      "LOAD_PL_ORGB" : {
+        "label" : "LM_ProductLicense__c (Org B, PLACEHOLDER connection)",
+        "type" : "LOAD_DATASET",
+        "top" : 252,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "TRANSFORM_ORGB" : {
+        "label" : "Stamp SourceOrg=OrgB",
+        "type" : "TRANSFORM",
+        "top" : 252,
+        "left" : 252,
+        "graph" : {
+          "COMPUTE_SOURCEORG_ORGB" : {
+            "label" : "Formula",
+            "parameters" : {
+              "type" : "BASE_FORMULA_UI"
+            }
+          }
+        },
+        "connectors" : [ ]
+      },
+      "APPEND_MULTIORG" : {
+        "label" : "Append Org A + Org B",
+        "type" : "APPEND",
+        "top" : 182,
+        "left" : 392
+      },
+      "OUTPUT_MULTIORG_SAMPLE" : {
+        "label" : "SAMPLE OUTPUT (not the real dataset)",
+        "type" : "OUTPUT",
+        "top" : 182,
+        "left" : 532
+      }
+    },
+    "connectors" : [ {
+      "source" : "LOAD_PL_ORGA",
+      "target" : "TRANSFORM_ORGA"
+    }, {
+      "source" : "LOAD_PL_ORGB",
+      "target" : "TRANSFORM_ORGB"
+    }, {
+      "source" : "TRANSFORM_ORGA",
+      "target" : "APPEND_MULTIORG"
+    }, {
+      "source" : "TRANSFORM_ORGB",
+      "target" : "APPEND_MULTIORG"
+    }, {
+      "source" : "APPEND_MULTIORG",
+      "target" : "OUTPUT_MULTIORG_SAMPLE"
+    } ],
+    "hiddenColumns" : [ ]
+  },
+  "runMode" : "full"
+}

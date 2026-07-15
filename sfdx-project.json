@@ -1,12 +1,12 @@
 {
   "packageDirectories": [
     {
-      "versionName": "ver 0.2.1 — dashboard drill-down, BRL, chunked purge",
-      "versionNumber": "0.2.1.NEXT",
+      "versionName": "ver 0.3.0 — org-wide entitlements, SourceOrg multi-org, junction UI",
+      "versionNumber": "0.3.0.NEXT",
       "path": "force-app",
       "default": true,
       "package": "LicenseManager",
-      "versionDescription": "Financial dashboard drill-down to license level, BRL currency formatting, chunked UserAssignment purge (LM_AssignmentPurgeQueueable) to scale truncation past the 50k query-row limit. View https://github.com/tiagonnascimento/sf-license-manager/blob/main/README.md"
+      "versionDescription": "Org-wide entitlements surfaced by LM_OrgLimitsController + the lmOrgLimits LWC (capacity limits and usage-based entitlement progress bars) inside the CRM Analytics dashboard (#3); SourceOrg dimension stamped across the recipe datasets with a dynamically grouping dashboard, plus a documented manual runbook for consolidating multiple orgs (#4); admin UI for the LM_PersonaPurchaseAllocation junction (#5); faceted License-grain financial utilization table (#6). View https://github.com/tiagonnascimento/sf-license-manager/blob/main/README.md"
     }
   ],
   "name": "licenseManager",
@@ -17,6 +17,7 @@
     "LicenseManager": "0HoKe000000CaRHKA0",
     "LicenseManager@0.1.0-1": "04tKe000000TnIJIA0",
     "LicenseManager@0.2.0-1": "04tKe000000xHBJIA2",
-    "LicenseManager@0.2.1-1": "04tKe000000xHBOIA2"
+    "LicenseManager@0.2.1-1": "04tKe000000xHBOIA2",
+    "LicenseManager@0.3.0-1": "04tKe000000xHBiIAM"
   }
 }

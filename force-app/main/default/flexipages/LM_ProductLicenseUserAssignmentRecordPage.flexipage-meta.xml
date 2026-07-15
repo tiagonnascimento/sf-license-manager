@@ -105,6 +105,26 @@
                 <identifier>RecordUniqueConstraint_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Persona__c</fieldItem>
+                <identifier>RecordPersona_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PurchaseCondition__c</fieldItem>
+                <identifier>RecordPurchaseCondition_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-ecf56ad4-04a3-42b2-b984-993ac443d0ef</name>
         <type>Facet</type>
     </flexiPageRegions>

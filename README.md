@@ -49,6 +49,13 @@ Beside these two permission sets, as the application uses CRM Analytics, users n
 
 ~~Link personas to purchase conditions for per-purchase financial tracking.~~ **DELIVERED**: The `PersonaPurchaseAllocation__c` junction and CRM Analytics financial dashboard now provide unit price, waste cost, chargeback allocation, and renewal forecasts per purchase condition.
 
+**v0.3.0** delivered four further improvements:
+
+- **Org-wide entitlements** (issue #3): the `LM_OrgLimitsController` Apex class and `lmOrgLimits` LWC surface org-level capacity limits and usage-based entitlements (from `OrgLimits` and `TenantUsageEntitlement`) directly on the dashboard — metrics that are not attributable per purchase.
+- **Multi-org readiness** (issue #4): a recipe-stamped `SourceOrg` dimension (replacing the old `Org__c` text tag) lets the dashboard group dynamically by org. A single install renders as one section; consolidating two or more real orgs is a documented manual extension in [`docs/05-runbook-multi-org.md`](docs/05-runbook-multi-org.md) (Data Sync connections are environment-specific and not packageable).
+- **Allocation junction UI** (issue #5): the `PersonaPurchaseAllocation__c` junction now has a page layout, record page, and related lists on both parents, so admins can maintain allocations from the Lightning app.
+- **Faceted financial table** (issue #6): the financial utilization table is aggregated to license grain (matching the charts) and reacts to chart selections as a facet filter.
+
 ### Distribution and Installation
 
 This application is distributed in form of an unlocked package. You can build your own app based on the code or simply get the package ID on the `sfdx-project.json` and install it directly in your org. Installation key is `Vai Corinthians`.

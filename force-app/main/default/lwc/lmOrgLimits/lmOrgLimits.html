@@ -1,0 +1,96 @@
+<template>
+  <lightning-card title="Org-Wide Entitlements" icon-name="utility:metrics">
+    <div class="slds-p-horizontal_small slds-p-bottom_small">
+      <p class="slds-text-body_small slds-m-bottom_small">
+        Org-level usage vs limit — not attributable per purchase.
+      </p>
+
+      <template if:true={error}>
+        <div
+          class="slds-text-color_error slds-text-body_small slds-m-bottom_small"
+          role="alert"
+        >
+          Could not load org limits: {error}
+        </div>
+      </template>
+
+      <h3
+        class="slds-text-title_caps slds-m-bottom_xx-small slds-text-color_weak"
+      >
+        Capacity Limits
+      </h3>
+      <div
+        class="lm-scroll lm-scroll_tall slds-grid slds-wrap slds-gutters_x-small"
+      >
+        <template for:each={limits} for:item="l">
+          <div
+            key={l.name}
+            data-id="limit-row"
+            class="slds-col slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-5 slds-m-bottom_x-small"
+          >
+            <div class="lm-tile slds-box slds-box_x-small slds-theme_shade">
+              <div class="slds-grid slds-grid_align-spread lm-tile__head">
+                <span
+                  class="slds-truncate slds-text-body_small slds-text-title_bold"
+                  title={l.name}
+                  >{l.name}</span
+                >
+                <span class="slds-text-body_small slds-m-left_x-small"
+                  >{l.pct}%</span
+                >
+              </div>
+              <lightning-progress-bar
+                value={l.pct}
+                size="small"
+              ></lightning-progress-bar>
+              <span class="slds-text-body_small slds-text-color_weak"
+                >{l.used} / {l.max}</span
+              >
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <template if:true={entitlements.length}>
+        <h3
+          class="lm-section-head slds-text-title_caps slds-m-bottom_xx-small slds-text-color_weak"
+        >
+          Usage-Based Entitlements
+        </h3>
+        <div class="lm-scroll slds-grid slds-wrap slds-gutters_x-small">
+          <template for:each={entitlements} for:item="e">
+            <div
+              key={e.setting}
+              data-id="entitlement-row"
+              class="slds-col slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-5 slds-m-bottom_x-small"
+            >
+              <div class="lm-tile slds-box slds-box_x-small slds-theme_shade">
+                <div class="slds-grid slds-grid_align-spread lm-tile__head">
+                  <span
+                    class="slds-truncate slds-text-body_small slds-text-title_bold"
+                    title={e.setting}
+                    >{e.setting}</span
+                  >
+                  <span class="slds-text-body_small slds-m-left_x-small"
+                    >{e.pct}%</span
+                  >
+                </div>
+                <lightning-progress-bar
+                  value={e.pct}
+                  size="small"
+                ></lightning-progress-bar>
+                <div class="slds-text-body_small slds-text-color_weak">
+                  {e.amountUsed} / {e.amountAllowed}
+                  <span
+                    class="slds-badge slds-badge_lightest slds-m-left_xx-small"
+                    >{e.frequency}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
+  </lightning-card>
+</template>
