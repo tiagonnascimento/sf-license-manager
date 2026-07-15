@@ -9,3 +9,14 @@
 .vscode
 
 coverage/
+
+# Salesforce metadata is authored by the platform, not by hand: `sf project
+# retrieve` brings XML with expanded empty tags (`<x></x>`) which
+# @prettier/plugin-xml collapses to `<x/>`, producing phantom diffs and false
+# "local changes" that break source tracking on every retrieve. Metadata XML
+# is therefore excluded from Prettier entirely. See issue #7.
+**/*.xml
+
+# CRM Analytics artifacts are platform-generated JSON (high conflict risk).
+**/*.wdpr
+**/*.wdf
