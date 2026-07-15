@@ -63,4 +63,24 @@ describe("c-lm-org-limits", () => {
     const rows = el.shadowRoot.querySelectorAll('[data-id="entitlement-row"]');
     expect(rows.length).toBe(1);
   });
+
+  it("surfaces an error message when a fetch rejects", async () => {
+    // Override the mocked getLimits to reject for this test only. requireMock
+    // is used inside the test body (not a top-level import) to avoid breaking
+    // the component's own require of the virtual apex module.
+    const getLimits = jest.requireMock(
+      "@salesforce/apex/LM_OrgLimitsController.getLimits"
+    ).default;
+    getLimits.mockImplementationOnce(() =>
+      Promise.reject({ body: { message: "boom" } })
+    );
+
+    const el = createElement("c-lm-org-limits", { is: LmOrgLimits });
+    document.body.appendChild(el);
+    await flushPromises();
+
+    const alert = el.shadowRoot.querySelector('[role="alert"]');
+    expect(alert).not.toBeNull();
+    expect(alert.textContent).toContain("boom");
+  });
 });

@@ -5,6 +5,15 @@
         Org-level usage vs limit — not attributable per purchase.
       </p>
 
+      <template if:true={error}>
+        <div
+          class="slds-text-color_error slds-text-body_small slds-m-bottom_small"
+          role="alert"
+        >
+          Could not load org limits: {error}
+        </div>
+      </template>
+
       <h3
         class="slds-text-title_caps slds-m-bottom_xx-small slds-text-color_weak"
       >

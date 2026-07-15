@@ -28,7 +28,7 @@ export default class LmOrgLimits extends LightningElement {
         }));
       })
       .catch((e) => {
-        this.error = e;
+        this.error = e?.body?.message || e?.message || "Unknown error";
       });
 
     getEntitlements()
@@ -41,12 +41,13 @@ export default class LmOrgLimits extends LightningElement {
           return {
             ...r,
             amountUsed: used,
+            amountAllowed: allowed,
             pct: allowed > 0 ? Math.round((used / allowed) * 100) : 0
           };
         });
       })
       .catch((e) => {
-        this.error = e;
+        this.error = e?.body?.message || e?.message || "Unknown error";
       });
   }
 }
