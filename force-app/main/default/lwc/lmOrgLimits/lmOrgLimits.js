@@ -33,7 +33,17 @@ export default class LmOrgLimits extends LightningElement {
 
     getEntitlements()
       .then((data) => {
-        this.entitlements = data || [];
+        this.entitlements = (data || []).map((r) => {
+          // AmountUsed can come back null (nothing consumed yet); treat as 0
+          // so the value and the bar still render.
+          const used = r.amountUsed || 0;
+          const allowed = r.amountAllowed || 0;
+          return {
+            ...r,
+            amountUsed: used,
+            pct: allowed > 0 ? Math.round((used / allowed) * 100) : 0
+          };
+        });
       })
       .catch((e) => {
         this.error = e;

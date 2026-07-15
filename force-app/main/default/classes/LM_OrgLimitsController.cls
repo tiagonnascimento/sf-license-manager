@@ -63,7 +63,9 @@ public with sharing class LM_OrgLimitsController {
         WITH USER_MODE
       ]) {
         EntitlementRow r = new EntitlementRow();
-        r.setting = e.Setting != null ? e.Setting : e.MasterLabel;
+        // Prefer the human-friendly MasterLabel; fall back to the technical
+        // Setting name only when no label is set.
+        r.setting = e.MasterLabel != null ? e.MasterLabel : e.Setting;
         r.amountUsed = e.AmountUsed;
         r.amountAllowed = e.CurrentAmountAllowed;
         r.frequency = e.Frequency;
