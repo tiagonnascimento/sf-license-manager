@@ -1,12 +1,12 @@
 {
   "packageDirectories": [
     {
-      "versionName": "ver 0.3.0 — org-wide entitlements, SourceOrg multi-org, junction UI",
-      "versionNumber": "0.3.0.NEXT",
+      "versionName": "ver 0.3.1 — visible SourceOrg selector, Investment labels",
+      "versionNumber": "0.3.1.NEXT",
       "path": "force-app",
       "default": true,
       "package": "LicenseManager",
-      "versionDescription": "Org-wide entitlements surfaced by LM_OrgLimitsController + the lmOrgLimits LWC (capacity limits and usage-based entitlement progress bars) inside the CRM Analytics dashboard (#3); SourceOrg dimension stamped across the recipe datasets with a dynamically grouping dashboard, plus a documented manual runbook for consolidating multiple orgs (#4); admin UI for the LM_PersonaPurchaseAllocation junction (#5); faceted License-grain financial utilization table (#6). View https://github.com/tiagonnascimento/sf-license-manager/blob/main/README.md"
+      "versionDescription": "Visible SourceOrg selector (listselector) in the dashboard top bar across all pages, letting users switch between consolidated orgs on-screen (the aggregateflex pages auto-facet; the SAQL financial steps bind to the selector explicitly); financial dashboard labels reworded from Cost to Investment and the waste terminology removed. View https://github.com/tiagonnascimento/sf-license-manager/blob/main/README.md"
     }
   ],
   "name": "licenseManager",
@@ -18,6 +18,7 @@
     "LicenseManager@0.1.0-1": "04tKe000000TnIJIA0",
     "LicenseManager@0.2.0-1": "04tKe000000xHBJIA2",
     "LicenseManager@0.2.1-1": "04tKe000000xHBOIA2",
-    "LicenseManager@0.3.0-1": "04tKe000000xHBiIAM"
+    "LicenseManager@0.3.0-1": "04tKe000000xHBiIAM",
+    "LicenseManager@0.3.1-1": "04tKe000000xHBsIAM"
   }
 }

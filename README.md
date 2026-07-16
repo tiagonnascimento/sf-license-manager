@@ -14,13 +14,35 @@ This application is built to provide an infrastructure in terms of data model an
 
 ### Screenshots
 
-![Home Page](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home.png?raw=true)
-![Home Page - addons](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-addons.png?raw=true)
-![Home Page - users](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-users.png?raw=true)
-![Home Page - financial utilization by license](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-financial-utilization.png?raw=true)
-![Home Page - product license list](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseList.png?raw=true)
-![Home Page - product license detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseDetail.png?raw=true)
-![Home Page - purchase detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/purchaseDetail.png?raw=true)
+_CRM Analytics dashboard — Base license utilization:_
+![Dashboard - base license utilization](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home.png?raw=true)
+
+_Dashboard — add-ons and login utilization:_
+![Dashboard - add-ons and login utilization](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-addons.png?raw=true)
+
+_Dashboard — users without recent login:_
+![Dashboard - users without login](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-users.png?raw=true)
+
+_Dashboard — financial utilization by named license:_
+![Dashboard - financial utilization by named license](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-named.png?raw=true)
+
+_Dashboard — org-wide entitlements (capacity limits and usage-based entitlements):_
+![Dashboard - org-wide entitlements](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/home-entitlements.png?raw=true)
+
+_Product License list:_
+![Product license list](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseList.png?raw=true)
+
+_Product License detail:_
+![Product license detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/productLicenseDetail.png?raw=true)
+
+_Persona detail (the analytical layer — SOQL query defining who uses the license):_
+![Persona detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/personaDetail.png?raw=true)
+
+_Purchase Condition detail (commercial terms):_
+![Purchase condition detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/purchaseCondition.png?raw=true)
+
+_Purchase detail:_
+![Purchase detail](https://github.com/tiagonnascimento/sf-license-manager/blob/main/docs/images/purchaseDetail.png?raw=true)
 
 ### Entities and Relationships
 
